@@ -19,7 +19,7 @@ const Hero = () => {
             Discover Unique Local Crafts
           </h1>
           <p className="text-lg md:text-xl text-gray-700 mb-8">
-            Supporting LOCAL artists and artisans in your community.
+            Supporting local artists and artisans in your community.
             Find handcrafted treasures made with passion and skill.
           </p>
 
