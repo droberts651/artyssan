@@ -1,5 +1,5 @@
 
-import { Palette, Brush, Scissors, GemStone, Shirt, Wheat, Utensils, BookOpen } from "lucide-react";
+import { Palette, Brush, Scissors, Gem, Shirt, Wheat, Utensils, BookOpen } from "lucide-react";
 
 const categories = [
   {
@@ -11,7 +11,7 @@ const categories = [
   {
     id: 2,
     name: "Jewelry",
-    icon: <GemStone className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    icon: <Gem className="w-8 h-8 mb-3 text-craft-terracotta" />,
     color: "bg-blue-50",
   },
   {
