@@ -63,13 +63,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for our crafts marketplace
+				// Cool color palette for crafts marketplace
 				craft: {
-					terracotta: "#E07A5F",
-					sage: "#81B29A",
-					cream: "#F2CC8F",
-					navy: "#3D405B",
-					background: "#F4F1DE"
+					terracotta: "#1EAEDB", // Changed from warm terracotta to bright blue
+					sage: "#33C3F0",       // Changed from sage to sky blue
+					cream: "#F1F1F1",      // Changed from cream to light gray
+					navy: "#403E43",       // Changed from navy to charcoal gray
+					background: "#F6F6F7"  // Changed to light gray background
 				}
 			},
 			fontFamily: {
