@@ -1,5 +1,8 @@
+
 import { Heart, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+
 const items = [{
   id: 1,
   name: "Handcrafted Ceramic Mug",
@@ -43,8 +46,10 @@ const items = [{
   image: "https://images.unsplash.com/photo-1612196319128-2e51846e0e8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2748&q=80",
   category: "Ceramics"
 }];
+
 const RecentItems = () => {
-  return <section className="py-16 bg-white">
+  return (
+    <section className="py-16 bg-white">
       <div className="container-custom">
         <h2 className="section-title text-center">Recently Added</h2>
         <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
@@ -52,7 +57,8 @@ const RecentItems = () => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {items.map(item => <div key={item.id} className="bg-white rounded-lg overflow-hidden shadow-md card-hover">
+          {items.map(item => (
+            <div key={item.id} className="bg-white rounded-lg overflow-hidden shadow-md card-hover">
               <div className="relative h-64 overflow-hidden group">
                 <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -81,13 +87,18 @@ const RecentItems = () => {
                   </Button>
                 </div>
               </div>
-            </div>)}
+            </div>
+          ))}
         </div>
 
         <div className="text-center mt-12">
-          <Button className="btn-primary">Browse All Items</Button>
+          <Button className="btn-primary" asChild>
+            <Link to="/new-arrivals">Browse All Items</Link>
+          </Button>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default RecentItems;

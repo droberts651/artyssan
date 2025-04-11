@@ -1,6 +1,7 @@
 
 import { Instagram, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const artists = [
   {
@@ -70,7 +71,9 @@ const FeaturedArtists = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button className="btn-primary">View All Artists</Button>
+          <Button className="btn-primary" asChild>
+            <Link to="/artists">View All Artists</Link>
+          </Button>
         </div>
       </div>
     </section>

@@ -9,6 +9,8 @@ import NotFound from "./pages/NotFound";
 import ArtistLogin from "./pages/ArtistLogin";
 import ArtistListings from "./pages/ArtistListings";
 import CategoryPage from "./pages/CategoryPage";
+import ArtistsPage from "./pages/ArtistsPage";
+import NewArrivalsPage from "./pages/NewArrivalsPage";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/artist/listings" element={<ArtistListings />} />
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/categories/:categoryName" element={<CategoryPage />} />
+          <Route path="/artists" element={<ArtistsPage />} />
+          <Route path="/new-arrivals" element={<NewArrivalsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

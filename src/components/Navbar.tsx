@@ -2,6 +2,7 @@
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,20 +12,20 @@ const Navbar = () => {
       <div className="container-custom flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
-          <a href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <div className="w-10 h-10 bg-craft-terracotta rounded-full flex items-center justify-center mr-2">
               <span className="text-white font-bold text-xl">C</span>
             </div>
             <h1 className="text-craft-navy text-xl md:text-2xl font-bold hidden sm:block">Crafty Local</h1>
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
-          <a href="#" className="text-foreground hover:text-craft-terracotta font-medium">Categories</a>
-          <a href="#" className="text-foreground hover:text-craft-terracotta font-medium">Artists</a>
-          <a href="#" className="text-foreground hover:text-craft-terracotta font-medium">New Arrivals</a>
-          <a href="#" className="text-foreground hover:text-craft-terracotta font-medium">About Us</a>
+          <Link to="/categories" className="text-foreground hover:text-craft-terracotta font-medium">Categories</Link>
+          <Link to="/artists" className="text-foreground hover:text-craft-terracotta font-medium">Artists</Link>
+          <Link to="/new-arrivals" className="text-foreground hover:text-craft-terracotta font-medium">New Arrivals</Link>
+          <Link to="#" className="text-foreground hover:text-craft-terracotta font-medium">About Us</Link>
         </div>
 
         {/* Action Buttons */}
@@ -66,11 +67,11 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden pt-4 pb-6 px-4 bg-white border-t">
           <div className="flex flex-col space-y-4">
-            <a href="#" className="text-foreground hover:text-craft-terracotta font-medium py-2">Categories</a>
-            <a href="#" className="text-foreground hover:text-craft-terracotta font-medium py-2">Artists</a>
-            <a href="#" className="text-foreground hover:text-craft-terracotta font-medium py-2">New Arrivals</a>
-            <a href="#" className="text-foreground hover:text-craft-terracotta font-medium py-2">About Us</a>
-            <a href="#" className="text-foreground hover:text-craft-terracotta font-medium py-2">Account</a>
+            <Link to="/categories" className="text-foreground hover:text-craft-terracotta font-medium py-2">Categories</Link>
+            <Link to="/artists" className="text-foreground hover:text-craft-terracotta font-medium py-2">Artists</Link>
+            <Link to="/new-arrivals" className="text-foreground hover:text-craft-terracotta font-medium py-2">New Arrivals</Link>
+            <Link to="#" className="text-foreground hover:text-craft-terracotta font-medium py-2">About Us</Link>
+            <Link to="#" className="text-foreground hover:text-craft-terracotta font-medium py-2">Account</Link>
           </div>
         </div>
       )}
