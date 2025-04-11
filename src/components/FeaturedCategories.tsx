@@ -1,54 +1,55 @@
 
 import { Palette, Brush, Scissors, Gem, Shirt, Wheat, Utensils, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const categories = [
   {
     id: 1,
     name: "Painting",
-    icon: <Palette className="w-8 h-8 mb-3 text-craft-terracotta" />,
-    color: "bg-blue-50",
+    icon: <Palette className="w-8 h-8 mb-3 text-[#19747E]" />,
+    color: "bg-[#D1E8E2]",
   },
   {
     id: 2,
     name: "Jewelry",
-    icon: <Gem className="w-8 h-8 mb-3 text-craft-terracotta" />,
-    color: "bg-cyan-50",
+    icon: <Gem className="w-8 h-8 mb-3 text-[#19747E]" />,
+    color: "bg-[#D1E8E2]",
   },
   {
     id: 3,
     name: "Textiles",
-    icon: <Scissors className="w-8 h-8 mb-3 text-craft-terracotta" />,
-    color: "bg-slate-50",
+    icon: <Scissors className="w-8 h-8 mb-3 text-[#19747E]" />,
+    color: "bg-[#D1E8E2]",
   },
   {
     id: 4,
     name: "Ceramics",
-    icon: <Utensils className="w-8 h-8 mb-3 text-craft-terracotta" />,
-    color: "bg-teal-50",
+    icon: <Utensils className="w-8 h-8 mb-3 text-[#19747E]" />,
+    color: "bg-[#D1E8E2]",
   },
   {
     id: 5,
     name: "Apparel",
-    icon: <Shirt className="w-8 h-8 mb-3 text-craft-terracotta" />,
-    color: "bg-indigo-50",
+    icon: <Shirt className="w-8 h-8 mb-3 text-[#19747E]" />,
+    color: "bg-[#D1E8E2]",
   },
   {
     id: 6,
     name: "Woodwork",
-    icon: <Wheat className="w-8 h-8 mb-3 text-craft-terracotta" />,
-    color: "bg-sky-50",
+    icon: <Wheat className="w-8 h-8 mb-3 text-[#19747E]" />,
+    color: "bg-[#D1E8E2]",
   },
   {
     id: 7,
     name: "Illustration",
-    icon: <Brush className="w-8 h-8 mb-3 text-craft-terracotta" />,
-    color: "bg-blue-50",
+    icon: <Brush className="w-8 h-8 mb-3 text-[#19747E]" />,
+    color: "bg-[#D1E8E2]",
   },
   {
     id: 8,
     name: "Bookbinding",
-    icon: <BookOpen className="w-8 h-8 mb-3 text-craft-terracotta" />,
-    color: "bg-slate-50",
+    icon: <BookOpen className="w-8 h-8 mb-3 text-[#19747E]" />,
+    color: "bg-[#D1E8E2]",
   },
 ];
 
@@ -63,16 +64,23 @@ const FeaturedCategories = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
           {categories.map((category) => (
-            <div 
+            <Link 
               key={category.id} 
-              className={`${category.color} rounded-lg p-4 text-center card-hover cursor-pointer`}
+              to={`/categories/${category.name}`}
+              className={`${category.color} rounded-lg p-4 text-center card-hover cursor-pointer hover:bg-[#A9D6E5] transition-colors`}
             >
               <div className="flex flex-col items-center justify-center h-full">
                 {category.icon}
-                <h3 className="font-medium text-craft-navy">{category.name}</h3>
+                <h3 className="font-medium text-[#19747E]">{category.name}</h3>
               </div>
-            </div>
+            </Link>
           ))}
+        </div>
+        
+        <div className="text-center mt-8">
+          <Link to="/categories" className="btn-primary inline-block">
+            View All Categories
+          </Link>
         </div>
       </div>
     </section>
