@@ -7,33 +7,33 @@
 
 @layer base {
   :root {
-    --background: 180 25% 95%;
-    --foreground: 187 67% 30%;
+    --background: 220 20% 97%;
+    --foreground: 220 17% 30%;
 
     --card: 0 0% 100%;
-    --card-foreground: 187 67% 30%;
+    --card-foreground: 220 17% 30%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 187 67% 30%;
+    --popover-foreground: 220 17% 30%;
 
-    --primary: 187 67% 30%;
-    --primary-foreground: 180 25% 95%;
+    --primary: 220 17% 30%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 196 46% 78%;
-    --secondary-foreground: 187 67% 30%;
+    --secondary: 199 94% 56%;
+    --secondary-foreground: 220 17% 30%;
 
-    --muted: 0 0% 89%;
-    --muted-foreground: 187 67% 30%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 17% 30%;
 
-    --accent: 164 30% 86%;
-    --accent-foreground: 187 67% 30%;
+    --accent: 199 86% 49%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 187 67% 30%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 17% 30%;
 
     --radius: 0.5rem;
   }
@@ -54,11 +54,11 @@
 }
 
 .btn-primary {
-  @apply bg-craft-teal hover:bg-opacity-90 text-white px-6 py-3 rounded-md transition duration-300 ease-in-out;
+  @apply bg-craft-navy hover:bg-opacity-90 text-white px-6 py-3 rounded-md transition duration-300 ease-in-out;
 }
 
 .btn-secondary {
-  @apply bg-craft-skyBlue hover:bg-opacity-90 text-craft-teal px-6 py-3 rounded-md transition duration-300 ease-in-out;
+  @apply bg-craft-terracotta hover:bg-opacity-90 text-white px-6 py-3 rounded-md transition duration-300 ease-in-out;
 }
 
 .card-hover {
@@ -66,7 +66,7 @@
 }
 
 .section-title {
-  @apply text-3xl md:text-4xl font-bold mb-6 text-craft-teal font-playfair;
+  @apply text-3xl md:text-4xl font-bold mb-6 text-craft-navy font-playfair;
 }
 
 .container-custom {

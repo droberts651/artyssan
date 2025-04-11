@@ -5,50 +5,50 @@ const categories = [
   {
     id: 1,
     name: "Painting",
-    icon: <Palette className="w-8 h-8 mb-3 text-craft-teal" />,
-    color: "bg-craft-mintGreen/50",
+    icon: <Palette className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    color: "bg-blue-50",
   },
   {
     id: 2,
     name: "Jewelry",
-    icon: <Gem className="w-8 h-8 mb-3 text-craft-teal" />,
-    color: "bg-craft-skyBlue/30",
+    icon: <Gem className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    color: "bg-cyan-50",
   },
   {
     id: 3,
     name: "Textiles",
-    icon: <Scissors className="w-8 h-8 mb-3 text-craft-teal" />,
-    color: "bg-craft-mintGreen/30",
+    icon: <Scissors className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    color: "bg-slate-50",
   },
   {
     id: 4,
     name: "Ceramics",
-    icon: <Utensils className="w-8 h-8 mb-3 text-craft-teal" />,
-    color: "bg-craft-skyBlue/50",
+    icon: <Utensils className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    color: "bg-teal-50",
   },
   {
     id: 5,
     name: "Apparel",
-    icon: <Shirt className="w-8 h-8 mb-3 text-craft-teal" />,
-    color: "bg-craft-mintGreen/70",
+    icon: <Shirt className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    color: "bg-indigo-50",
   },
   {
     id: 6,
     name: "Woodwork",
-    icon: <Wheat className="w-8 h-8 mb-3 text-craft-teal" />,
-    color: "bg-craft-skyBlue/40",
+    icon: <Wheat className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    color: "bg-sky-50",
   },
   {
     id: 7,
     name: "Illustration",
-    icon: <Brush className="w-8 h-8 mb-3 text-craft-teal" />,
-    color: "bg-craft-mintGreen/40",
+    icon: <Brush className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    color: "bg-blue-50",
   },
   {
     id: 8,
     name: "Bookbinding",
-    icon: <BookOpen className="w-8 h-8 mb-3 text-craft-teal" />,
-    color: "bg-craft-skyBlue/20",
+    icon: <BookOpen className="w-8 h-8 mb-3 text-craft-terracotta" />,
+    color: "bg-slate-50",
   },
 ];
 
@@ -69,7 +69,7 @@ const FeaturedCategories = () => {
             >
               <div className="flex flex-col items-center justify-center h-full">
                 {category.icon}
-                <h3 className="font-medium text-craft-teal">{category.name}</h3>
+                <h3 className="font-medium text-craft-navy">{category.name}</h3>
               </div>
             </div>
           ))}
