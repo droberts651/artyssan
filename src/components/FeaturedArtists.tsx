@@ -35,7 +35,7 @@ const artists = [
 
 const FeaturedArtists = () => {
   return (
-    <section className="py-16 bg-craft-sage bg-opacity-10">
+    <section className="py-16 bg-craft-mintGreen bg-opacity-40">
       <div className="container-custom">
         <h2 className="section-title text-center">Meet Our Featured Artisans</h2>
         <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
@@ -53,14 +53,14 @@ const FeaturedArtists = () => {
                 />
               </div>
               <div className="p-5">
-                <h3 className="text-xl font-semibold text-craft-navy">{artist.name}</h3>
-                <p className="text-craft-terracotta font-medium">{artist.specialty}</p>
+                <h3 className="text-xl font-semibold text-craft-teal">{artist.name}</h3>
+                <p className="text-craft-skyBlue font-medium">{artist.specialty}</p>
                 <p className="text-gray-600 text-sm mb-4">{artist.location}</p>
                 <div className="flex justify-between items-center">
-                  <Button variant="outline" size="sm" className="text-craft-navy border-craft-navy">
+                  <Button variant="outline" size="sm" className="text-craft-teal border-craft-teal">
                     <Instagram size={16} className="mr-2" /> Follow
                   </Button>
-                  <Button variant="ghost" size="sm" className="text-craft-navy">
+                  <Button variant="ghost" size="sm" className="text-craft-teal">
                     <ExternalLink size={16} className="mr-2" /> View Shop
                   </Button>
                 </div>

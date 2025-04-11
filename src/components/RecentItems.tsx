@@ -73,26 +73,26 @@ const RecentItems = () => {
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="flex gap-3">
-                    <Button size="icon" variant="secondary" className="rounded-full bg-white text-craft-navy hover:bg-white/90">
+                    <Button size="icon" variant="secondary" className="rounded-full bg-white text-craft-teal hover:bg-white/90">
                       <Heart size={18} />
                     </Button>
-                    <Button size="icon" variant="secondary" className="rounded-full bg-craft-terracotta text-white hover:bg-craft-terracotta/90">
+                    <Button size="icon" variant="secondary" className="rounded-full bg-craft-skyBlue text-craft-teal hover:bg-craft-skyBlue/90">
                       <ShoppingCart size={18} />
                     </Button>
                   </div>
                 </div>
-                <div className="absolute top-2 right-2 bg-craft-sage text-white text-xs px-2 py-1 rounded">
+                <div className="absolute top-2 right-2 bg-craft-skyBlue text-craft-teal text-xs px-2 py-1 rounded">
                   {item.category}
                 </div>
               </div>
               <div className="p-5">
-                <h3 className="text-lg font-semibold text-craft-navy hover:text-craft-terracotta transition-colors duration-300">
+                <h3 className="text-lg font-semibold text-craft-teal hover:text-craft-skyBlue transition-colors duration-300">
                   <a href="#">{item.name}</a>
                 </h3>
                 <p className="text-gray-600 text-sm">by {item.artist}</p>
                 <div className="mt-3 flex justify-between items-center">
-                  <span className="text-craft-navy font-semibold">${item.price.toFixed(2)}</span>
-                  <Button variant="ghost" size="sm" className="text-craft-navy hover:text-craft-terracotta">
+                  <span className="text-craft-teal font-semibold">${item.price.toFixed(2)}</span>
+                  <Button variant="ghost" size="sm" className="text-craft-teal hover:text-craft-skyBlue">
                     View Details
                   </Button>
                 </div>

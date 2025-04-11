@@ -28,11 +28,11 @@ const Newsletter = () => {
   };
 
   return (
-    <section className="py-16 bg-craft-navy text-white">
+    <section className="py-16 bg-craft-teal text-white">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair">Stay Updated with New Treasures</h2>
-          <p className="text-lg text-craft-cream/90 mb-8">
+          <p className="text-lg text-craft-mintGreen/90 mb-8">
             Subscribe to our newsletter to receive updates about new artisans, items, and exclusive offers.
           </p>
           
@@ -44,12 +44,12 @@ const Newsletter = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Button type="submit" className="bg-craft-terracotta hover:bg-craft-terracotta/90 text-white py-6">
+            <Button type="submit" className="bg-craft-skyBlue hover:bg-craft-skyBlue/90 text-craft-teal py-6">
               Subscribe
             </Button>
           </form>
           
-          <p className="text-sm text-craft-cream/70 mt-4">
+          <p className="text-sm text-craft-mintGreen/70 mt-4">
             We respect your privacy. Unsubscribe at any time.
           </p>
         </div>
