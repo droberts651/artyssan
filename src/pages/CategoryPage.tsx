@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -7,16 +8,56 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { ArrowLeft, ShoppingCart, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// Using the categories from FeaturedCategories component
+// Using the categories from FeaturedCategories component with same colors
 const categories = [
-  { id: 1, name: "Painting" },
-  { id: 2, name: "Jewelry" },
-  { id: 3, name: "Textiles" },
-  { id: 4, name: "Ceramics" },
-  { id: 5, name: "Apparel" },
-  { id: 6, name: "Woodwork" },
-  { id: 7, name: "Illustration" },
-  { id: 8, name: "Bookbinding" },
+  {
+    id: 1,
+    name: "Painting",
+    color: "bg-[#D1E8E2]",
+    hoverColor: "hover:bg-[#A9D6E5]"
+  },
+  {
+    id: 2,
+    name: "Jewelry",
+    color: "bg-[#F1F8E9]",
+    hoverColor: "hover:bg-[#C5E1A5]"
+  },
+  {
+    id: 3,
+    name: "Textiles",
+    color: "bg-[#E0F7FA]",
+    hoverColor: "hover:bg-[#80DEEA]"
+  },
+  {
+    id: 4,
+    name: "Ceramics",
+    color: "bg-[#E8F5E9]",
+    hoverColor: "hover:bg-[#A5D6A7]"
+  },
+  {
+    id: 5,
+    name: "Apparel",
+    color: "bg-[#E3F2FD]",
+    hoverColor: "hover:bg-[#90CAF9]"
+  },
+  {
+    id: 6,
+    name: "Woodwork",
+    color: "bg-[#FFF8E1]",
+    hoverColor: "hover:bg-[#FFE082]"
+  },
+  {
+    id: 7,
+    name: "Illustration",
+    color: "bg-[#F3E5F5]",
+    hoverColor: "hover:bg-[#CE93D8]"
+  },
+  {
+    id: 8,
+    name: "Bookbinding",
+    color: "bg-[#FFEBEE]",
+    hoverColor: "hover:bg-[#FFCDD2]"
+  },
 ];
 
 // Mock item data
@@ -205,6 +246,11 @@ const CategoryPage = () => {
     }
   }, [selectedCategory]);
 
+  // Find the category object for the selected category
+  const getCategory = (name: string) => {
+    return categories.find(cat => cat.name === name);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -231,7 +277,7 @@ const CategoryPage = () => {
               {categories.map((category) => (
                 <Card 
                   key={category.id} 
-                  className="bg-[#D1E8E2] hover:bg-[#A9D6E5] transition-colors duration-300 cursor-pointer"
+                  className={`${category.color} ${category.hoverColor} transition-colors duration-300 cursor-pointer`}
                   onClick={() => setSelectedCategory(category.name)}
                 >
                   <CardHeader className="p-4">
