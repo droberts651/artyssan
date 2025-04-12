@@ -1,5 +1,6 @@
 
 import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -34,11 +35,11 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-craft-navy">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Home</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Browse Categories</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Featured Artists</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">New Arrivals</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">About Us</a></li>
+              <li><Link to="/" className="text-gray-600 hover:text-craft-terracotta transition-colors">Home</Link></li>
+              <li><Link to="/categories" className="text-gray-600 hover:text-craft-terracotta transition-colors">Browse Categories</Link></li>
+              <li><Link to="/artists" className="text-gray-600 hover:text-craft-terracotta transition-colors">Featured Artists</Link></li>
+              <li><Link to="/new-arrivals" className="text-gray-600 hover:text-craft-terracotta transition-colors">New Arrivals</Link></li>
+              <li><Link to="/about-us" className="text-gray-600 hover:text-craft-terracotta transition-colors">About Us</Link></li>
             </ul>
           </div>
 
@@ -46,11 +47,11 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-craft-navy">Support</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">FAQs</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Shipping Policy</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Returns & Exchanges</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Contact Us</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Privacy Policy</a></li>
+              <li><Link to="/faq" className="text-gray-600 hover:text-craft-terracotta transition-colors">FAQs</Link></li>
+              <li><Link to="/shipping-policy" className="text-gray-600 hover:text-craft-terracotta transition-colors">Shipping Policy</Link></li>
+              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Returns & Exchanges</Link></li>
+              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Contact Us</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-600 hover:text-craft-terracotta transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
 
@@ -58,10 +59,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-craft-navy">For Artists</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Sell on Crafty Local</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Artist Resources</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Success Stories</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Artist Login</a></li>
+              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Sell on Crafty Local</Link></li>
+              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Artist Resources</Link></li>
+              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Success Stories</Link></li>
+              <li><Link to="/artist/login" className="text-gray-600 hover:text-craft-terracotta transition-colors">Artist Login</Link></li>
             </ul>
           </div>
         </div>
