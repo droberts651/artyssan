@@ -49,8 +49,8 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><Link to="/faq" className="text-gray-600 hover:text-craft-terracotta transition-colors">FAQs</Link></li>
               <li><Link to="/shipping-policy" className="text-gray-600 hover:text-craft-terracotta transition-colors">Shipping Policy</Link></li>
-              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Returns & Exchanges</Link></li>
-              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Contact Us</Link></li>
+              <li><Link to="/returns-policy" className="text-gray-600 hover:text-craft-terracotta transition-colors">Returns & Exchanges</Link></li>
+              <li><Link to="/contact-us" className="text-gray-600 hover:text-craft-terracotta transition-colors">Contact Us</Link></li>
               <li><Link to="/privacy-policy" className="text-gray-600 hover:text-craft-terracotta transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
@@ -59,9 +59,9 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-craft-navy">For Artists</h4>
             <ul className="space-y-2">
-              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Sell on Lokal</Link></li>
-              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Artist Resources</Link></li>
-              <li><Link to="#" className="text-gray-600 hover:text-craft-terracotta transition-colors">Success Stories</Link></li>
+              <li><Link to="/artist/sell" className="text-gray-600 hover:text-craft-terracotta transition-colors">Sell on Lokal</Link></li>
+              <li><Link to="/artist/resources" className="text-gray-600 hover:text-craft-terracotta transition-colors">Artist Resources</Link></li>
+              <li><Link to="/artist/success-stories" className="text-gray-600 hover:text-craft-terracotta transition-colors">Success Stories</Link></li>
               <li><Link to="/artist/login" className="text-gray-600 hover:text-craft-terracotta transition-colors">Artist Login</Link></li>
             </ul>
           </div>
