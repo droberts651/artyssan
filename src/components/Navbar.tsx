@@ -14,9 +14,9 @@ const Navbar = () => {
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
             <div className="w-10 h-10 bg-craft-terracotta rounded-full flex items-center justify-center mr-2">
-              <span className="text-white font-bold text-xl">C</span>
+              <span className="text-white font-bold text-xl">L</span>
             </div>
-            <h1 className="text-craft-navy text-xl md:text-2xl font-bold hidden sm:block">Crafty Local</h1>
+            <h1 className="text-craft-navy text-xl md:text-2xl font-bold hidden sm:block">Lokal</h1>
           </Link>
         </div>
 

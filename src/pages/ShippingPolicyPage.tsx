@@ -15,7 +15,7 @@ const ShippingPolicyPage = () => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-[#19747E] mb-4">Processing Times</h2>
               <p className="mb-4">
-                At Crafty Local, each item is carefully handcrafted by our artisans. Due to the handmade nature of our products, please allow 3-5 business days for processing before shipment. Custom orders may require additional processing time, which will be communicated to you at the time of purchase.
+                At Lokal, each item is carefully handcrafted by our artisans. Due to the handmade nature of our products, please allow 3-5 business days for processing before shipment. Custom orders may require additional processing time, which will be communicated to you at the time of purchase.
               </p>
               <p>
                 Once your order ships, you will receive a confirmation email with tracking information, allowing you to monitor your package's journey to you.
@@ -94,10 +94,10 @@ const ShippingPolicyPage = () => {
             <section>
               <h2 className="text-2xl font-semibold text-[#19747E] mb-4">Contact Us</h2>
               <p className="mb-4">
-                If you have any questions about your shipment or our shipping policies, please don't hesitate to contact our customer service team at <a href="mailto:shipping@craftylocal.com" className="text-[#19747E] underline">shipping@craftylocal.com</a> or call us at (555) 123-4567.
+                If you have any questions about your shipment or our shipping policies, please don't hesitate to contact our customer service team at <a href="mailto:shipping@lokal.com" className="text-[#19747E] underline">shipping@lokal.com</a> or call us at (555) 123-4567.
               </p>
               <p>
-                This shipping policy was last updated on April 1, 2025.
+                This shipping policy was last updated on April 12, 2025.
               </p>
             </section>
           </div>

@@ -1,6 +1,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Link } from "react-router-dom";
 
 const AboutUsPage = () => {
   return (
@@ -8,16 +9,16 @@ const AboutUsPage = () => {
       <Navbar />
       <main className="flex-grow bg-white">
         <div className="container-custom py-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#19747E] mb-8">About Crafty Local</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-[#19747E] mb-8">About Lokal</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div>
               <h2 className="text-2xl font-semibold text-[#19747E] mb-4">Our Story</h2>
               <p className="text-gray-600 mb-4">
-                Crafty Local was founded in 2023 with a simple mission: to connect talented local artisans with people who appreciate handcrafted quality and unique items. What started as a small community marketplace has grown into a platform that celebrates craftsmanship and supports the creative economy.
+                Lokal was founded in 2023 with a simple mission: to connect talented local artisans with people who appreciate handcrafted quality and unique items. What started as a small community marketplace has grown into a platform that celebrates craftsmanship and supports the creative economy.
               </p>
               <p className="text-gray-600 mb-4">
-                Our founder, Emma Rogers, noticed that many talented artisans in her community had limited options to showcase and sell their work. Believing in the value of handmade items and the stories behind them, she created Crafty Local as a bridge between makers and buyers who share an appreciation for craftsmanship.
+                Our founder, Emma Rogers, noticed that many talented artisans in her community had limited options to showcase and sell their work. Believing in the value of handmade items and the stories behind them, she created Lokal as a bridge between makers and buyers who share an appreciation for craftsmanship.
               </p>
             </div>
             <div className="rounded-lg overflow-hidden h-64 md:h-auto">
@@ -67,7 +68,7 @@ const AboutUsPage = () => {
           <div className="mb-12">
             <h2 className="text-2xl font-semibold text-[#19747E] mb-4">Join Our Community</h2>
             <p className="text-gray-600 mb-4">
-              Whether you're a skilled artisan looking to share your creations or a discerning buyer seeking unique handcrafted items, we welcome you to the Crafty Local community. Together, we can support local craftsmanship and bring more beauty and meaning into our everyday lives.
+              Whether you're a skilled artisan looking to share your creations or a discerning buyer seeking unique handcrafted items, we welcome you to the Lokal community. Together, we can support local craftsmanship and bring more beauty and meaning into our everyday lives.
             </p>
             <div className="flex gap-4 mt-6">
               <Link to="/artists" className="btn-primary">Meet Our Artisans</Link>
@@ -82,5 +83,3 @@ const AboutUsPage = () => {
 };
 
 export default AboutUsPage;
-
-import { Link } from "react-router-dom";

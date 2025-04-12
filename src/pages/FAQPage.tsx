@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     question: "Are all items handcrafted?",
-    answer: "Yes, every item on Crafty Local is handcrafted by our verified artisans. We personally vet each maker to ensure they meet our standards for quality and craftsmanship."
+    answer: "Yes, every item on Lokal is handcrafted by our verified artisans. We personally vet each maker to ensure they meet our standards for quality and craftsmanship."
   },
   {
     question: "How do I contact an artisan with questions?",
@@ -33,8 +33,8 @@ const faqs = [
     answer: "Many of our artisans accept custom orders. Look for the 'Custom Orders' badge on their profile or products, or message them directly to inquire about customization options."
   },
   {
-    question: "How do I become a seller on Crafty Local?",
-    answer: "We welcome talented artisans to join our community! Visit our 'Sell on Crafty Local' page to learn about our application process and requirements."
+    question: "How do I become a seller on Lokal?",
+    answer: "We welcome talented artisans to join our community! Visit our 'Sell on Lokal' page to learn about our application process and requirements."
   },
   {
     question: "Do you ship internationally?",
@@ -42,7 +42,7 @@ const faqs = [
   },
   {
     question: "How are artisans compensated?",
-    answer: "Artisans set their own prices and receive the majority of each sale. Crafty Local takes a small commission to cover platform maintenance, marketing, and customer service."
+    answer: "Artisans set their own prices and receive the majority of each sale. Lokal takes a small commission to cover platform maintenance, marketing, and customer service."
   }
 ];
 
@@ -55,7 +55,7 @@ const FAQPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-[#19747E] mb-8">Frequently Asked Questions</h1>
           
           <p className="text-gray-600 mb-8 max-w-3xl">
-            Find answers to common questions about Crafty Local, our products, ordering, shipping, and more. If you can't find what you're looking for, please don't hesitate to contact our customer service team.
+            Find answers to common questions about Lokal, our products, ordering, shipping, and more. If you can't find what you're looking for, please don't hesitate to contact our customer service team.
           </p>
           
           <div className="space-y-6">
@@ -72,7 +72,7 @@ const FAQPage = () => {
             <p className="text-gray-600 mb-6">
               Our customer service team is happy to help with any questions you may have about our products or services.
             </p>
-            <a href="mailto:support@craftylocal.com" className="btn-primary">Contact Support</a>
+            <a href="mailto:support@lokal.com" className="btn-primary">Contact Support</a>
           </div>
         </div>
       </main>

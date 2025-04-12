@@ -19,7 +19,7 @@ const PrivacyPolicyPage = () => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-[#19747E] mb-4">Introduction</h2>
               <p>
-                Crafty Local ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, including any other media form, media channel, mobile website, or mobile application related or connected to Crafty Local (collectively, the "Site").
+                Lokal ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, including any other media form, media channel, mobile website, or mobile application related or connected to Lokal (collectively, the "Site").
               </p>
               <p className="mt-4">
                 Please read this Privacy Policy carefully. If you do not agree with the terms of this Privacy Policy, please do not access the Site. We reserve the right to make changes to this Privacy Policy at any time and for any reason. Any changes or modifications will be effective immediately upon posting the updated Privacy Policy on the Site, and you waive the right to receive specific notice of each such change or modification.
@@ -128,10 +128,10 @@ const PrivacyPolicyPage = () => {
                 If you have questions or concerns about this Privacy Policy or our privacy practices, please contact us at:
               </p>
               <div className="mt-4">
-                <p>Crafty Local</p>
+                <p>Lokal</p>
                 <p>123 Artisan Way</p>
                 <p>Craftsville, CR 12345</p>
-                <p>Email: <a href="mailto:privacy@craftylocal.com" className="text-[#19747E] underline">privacy@craftylocal.com</a></p>
+                <p>Email: <a href="mailto:privacy@lokal.com" className="text-[#19747E] underline">privacy@lokal.com</a></p>
                 <p>Phone: (555) 987-6543</p>
               </div>
             </section>
