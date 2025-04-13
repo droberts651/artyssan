@@ -92,13 +92,19 @@ const SearchResultsPage = () => {
   const [results, setResults] = useState<typeof allProducts>([]);
   const { addItem } = useCartStore();
 
+  // Run search on mount and when query changes
   useEffect(() => {
-    if (query) {
+    if (query.trim()) {
+      console.log("Searching for:", query);
+      const lowercaseQuery = query.toLowerCase().trim();
+      
       const searchResults = allProducts.filter(product => 
-        product.name.toLowerCase().includes(query.toLowerCase()) ||
-        product.artist.toLowerCase().includes(query.toLowerCase()) ||
-        product.category.toLowerCase().includes(query.toLowerCase())
+        product.name.toLowerCase().includes(lowercaseQuery) ||
+        product.artist.toLowerCase().includes(lowercaseQuery) ||
+        product.category.toLowerCase().includes(lowercaseQuery)
       );
+      
+      console.log("Found results:", searchResults.length);
       setResults(searchResults);
     } else {
       setResults([]);
@@ -154,7 +160,10 @@ const SearchResultsPage = () => {
                           size="icon" 
                           variant="secondary" 
                           className="rounded-full bg-craft-navy text-white hover:bg-craft-navy/90"
-                          onClick={() => handleAddToCart(product)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleAddToCart(product);
+                          }}
                         >
                           <ShoppingCart size={18} />
                         </Button>

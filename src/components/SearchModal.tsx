@@ -49,7 +49,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
     localStorage.setItem("recentSearches", JSON.stringify(newRecentSearches));
     
     // Navigate to search results page
-    navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
+    navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
     onClose();
   };
 
