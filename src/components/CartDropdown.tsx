@@ -1,14 +1,14 @@
-
 import React from "react";
 import { ShoppingCart, X, Plus, Minus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { useCartStore } from "@/store/cartStore";
 
 const CartDropdown = () => {
   const { items, removeItem, updateQuantity, calculateTotal } = useCartStore();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleRemoveItem = (id: number) => {
     removeItem(id);
@@ -21,6 +21,14 @@ const CartDropdown = () => {
   const handleUpdateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity < 1) return;
     updateQuantity(id, newQuantity);
+  };
+
+  const handleContinueShopping = () => {
+    if (location.pathname.includes('/categories/')) {
+      navigate(location.pathname);
+    } else {
+      navigate("/new-arrivals");
+    }
   };
 
   return (
@@ -44,7 +52,7 @@ const CartDropdown = () => {
           <p className="text-sm text-gray-500 mb-4">Start shopping to add items to your cart</p>
           <Button 
             className="bg-craft-terracotta hover:bg-craft-terracotta/90"
-            onClick={() => navigate("/new-arrivals")}
+            onClick={handleContinueShopping}
           >
             Browse Products
           </Button>

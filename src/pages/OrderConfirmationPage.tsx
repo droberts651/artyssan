@@ -1,15 +1,36 @@
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useCartStore } from "@/store/cartStore";
+import { useEffect } from "react";
 
 const OrderConfirmationPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { clearCart } = useCartStore();
+  
+  useEffect(() => {
+    // Clear the cart when order is confirmed
+    clearCart();
+  }, [clearCart]);
   
   // Generate a random order number
   const orderNumber = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+  
+  const handleContinueShopping = () => {
+    // Get the last visited category from localStorage, if available
+    const lastCategory = localStorage.getItem("lastVisitedCategory");
+    
+    if (lastCategory) {
+      navigate(lastCategory);
+    } else {
+      // Default to categories page if no last category
+      navigate("/categories");
+    }
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -55,7 +76,7 @@ const OrderConfirmationPage = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
                 <Button
-                  onClick={() => navigate("/")}
+                  onClick={handleContinueShopping}
                   className="bg-craft-terracotta hover:bg-craft-terracotta/90"
                 >
                   Continue Shopping <ArrowRight className="ml-2" size={16} />

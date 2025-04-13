@@ -54,7 +54,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleRecentSearchClick = (term: string) => {
-    setSearchTerm(term);
     navigate(`/search?q=${encodeURIComponent(term)}`);
     onClose();
   };
@@ -121,7 +120,10 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
               variant="outline"
               size="sm"
               className="text-sm"
-              onClick={() => navigate("/categories/jewelry")}
+              onClick={() => {
+                navigate("/categories/jewelry");
+                onClose();
+              }}
             >
               Jewelry
             </Button>
@@ -129,7 +131,10 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
               variant="outline"
               size="sm"
               className="text-sm"
-              onClick={() => navigate("/categories/pottery")}
+              onClick={() => {
+                navigate("/categories/pottery");
+                onClose();
+              }}
             >
               Pottery
             </Button>
@@ -137,7 +142,10 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
               variant="outline"
               size="sm"
               className="text-sm"
-              onClick={() => navigate("/categories/textiles")}
+              onClick={() => {
+                navigate("/categories/textiles");
+                onClose();
+              }}
             >
               Textiles
             </Button>
@@ -145,7 +153,10 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
               variant="outline"
               size="sm"
               className="text-sm"
-              onClick={() => navigate("/categories/woodworking")}
+              onClick={() => {
+                navigate("/categories/woodworking");
+                onClose();
+              }}
             >
               Woodworking
             </Button>

@@ -6,12 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchModal from "./SearchModal";
 import CartDropdown from "./CartDropdown";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useCartStore } from "@/store/cartStore";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
+  const { itemCount } = useCartStore();
 
   const handleUserClick = () => {
     navigate("/artist/login");
@@ -62,9 +64,11 @@ const Navbar = () => {
             <PopoverTrigger asChild>
               <Button variant="ghost" size="icon" className="text-craft-navy relative">
                 <ShoppingCart size={20} />
-                <span className="absolute -top-1 -right-1 bg-craft-terracotta text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                  0
-                </span>
+                {itemCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-craft-terracotta text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                    {itemCount()}
+                  </span>
+                )}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-80 p-0">
@@ -86,8 +90,13 @@ const Navbar = () => {
           
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-craft-navy mr-2">
+              <Button variant="ghost" size="icon" className="text-craft-navy mr-2 relative">
                 <ShoppingCart size={20} />
+                {itemCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-craft-terracotta text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                    {itemCount()}
+                  </span>
+                )}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-72 p-0">

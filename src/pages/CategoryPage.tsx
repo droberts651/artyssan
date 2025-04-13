@@ -6,7 +6,9 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, ShoppingCart, Heart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCartStore, CartItem } from "@/store/cartStore";
+import { toast } from "@/hooks/use-toast";
 
 // Using the categories from FeaturedCategories component with same colors
 const categories = [
@@ -221,6 +223,8 @@ const CategoryPage = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
   const [randomItems, setRandomItems] = useState<Item[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryName || null);
+  const navigate = useNavigate();
+  const { addItem } = useCartStore();
 
   // Function to get a random item from a category
   const getRandomItem = (categoryName: string): Item | null => {
@@ -232,10 +236,18 @@ const CategoryPage = () => {
   };
 
   useEffect(() => {
+    // Update the selected category when the URL parameter changes
+    setSelectedCategory(categoryName || null);
+  }, [categoryName]);
+
+  useEffect(() => {
     // If a specific category is selected, only show items from that category
     if (selectedCategory) {
-      const item = getRandomItem(selectedCategory);
-      setRandomItems(item ? [item] : []);
+      // Save the current category path to localStorage for "continue shopping" functionality
+      localStorage.setItem("lastVisitedCategory", `/categories/${selectedCategory}`);
+      
+      const categoryItems = mockItems[selectedCategory as keyof typeof mockItems];
+      setRandomItems(categoryItems || []);
     } else {
       // Otherwise show one random item from each category
       const items = categories.map(category => {
@@ -243,8 +255,27 @@ const CategoryPage = () => {
       }).filter(item => item !== null) as Item[];
       
       setRandomItems(items);
+      
+      // If on main categories page, save that as the last visited
+      localStorage.setItem("lastVisitedCategory", "/categories");
     }
   }, [selectedCategory]);
+
+  const handleAddToCart = (item: Item) => {
+    const cartItem: CartItem = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: 1,
+      image: item.image
+    };
+    
+    addItem(cartItem);
+    toast({
+      title: "Added to cart",
+      description: `${item.name} has been added to your cart.`
+    });
+  };
 
   // Find the category object for the selected category
   const getCategory = (name: string) => {
@@ -263,7 +294,7 @@ const CategoryPage = () => {
             {selectedCategory && (
               <Button 
                 variant="outline" 
-                onClick={() => setSelectedCategory(null)}
+                onClick={() => navigate("/categories")}
                 className="flex items-center gap-2"
               >
                 <ArrowLeft size={16} />
@@ -278,7 +309,7 @@ const CategoryPage = () => {
                 <Card 
                   key={category.id} 
                   className={`${category.color} ${category.hoverColor} transition-colors duration-300 cursor-pointer`}
-                  onClick={() => setSelectedCategory(category.name)}
+                  onClick={() => navigate(`/categories/${category.name}`)}
                 >
                   <CardHeader className="p-4">
                     <CardTitle className="text-[#19747E]">{category.name}</CardTitle>
@@ -302,7 +333,12 @@ const CategoryPage = () => {
                       <Button size="icon" variant="secondary" className="rounded-full bg-white text-[#19747E] hover:bg-white/90">
                         <Heart size={18} />
                       </Button>
-                      <Button size="icon" variant="secondary" className="rounded-full bg-[#19747E] text-white hover:bg-[#19747E]/90">
+                      <Button 
+                        size="icon" 
+                        variant="secondary" 
+                        className="rounded-full bg-[#19747E] text-white hover:bg-[#19747E]/90"
+                        onClick={() => handleAddToCart(item)}
+                      >
                         <ShoppingCart size={18} />
                       </Button>
                     </div>
@@ -313,13 +349,18 @@ const CategoryPage = () => {
                 </div>
                 <CardContent className="p-5">
                   <h3 className="text-lg font-semibold text-[#19747E] hover:text-[#A9D6E5] transition-colors duration-300">
-                    <Link to="#">{item.name}</Link>
+                    <Link to={`/product/${item.id}`}>{item.name}</Link>
                   </h3>
                   <p className="text-gray-600 text-sm">by {item.artist}</p>
                 </CardContent>
                 <CardFooter className="px-5 pb-5 pt-0 flex justify-between items-center">
                   <span className="text-[#19747E] font-semibold">${item.price.toFixed(2)}</span>
-                  <Button variant="ghost" size="sm" className="text-[#19747E] hover:text-[#A9D6E5]">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-[#19747E] hover:text-[#A9D6E5]"
+                    onClick={() => navigate(`/product/${item.id}`)}
+                  >
                     View Details
                   </Button>
                 </CardFooter>
