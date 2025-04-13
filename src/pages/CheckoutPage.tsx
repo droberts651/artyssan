@@ -9,11 +9,86 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { toast } from "@/hooks/use-toast";
 import { useCartStore } from "@/store/cartStore";
+import { useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient"; // This would need to be created
+
+// Import Stripe
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+
+// Initialize Stripe
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+// Payment form component
+const PaymentForm = ({ clientSecret, orderId }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
+  const { clearCart } = useCartStore();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    setIsProcessing(true);
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: window.location.origin + "/order-confirmation?order_id=" + orderId,
+      },
+      redirect: "if_required",
+    });
+
+    if (error) {
+      toast({
+        title: "Payment failed",
+        description: error.message || "An unexpected error occurred",
+        variant: "destructive",
+      });
+      setIsProcessing(false);
+    } else {
+      // Payment succeeded (if no redirect)
+      clearCart();
+      toast({
+        title: "Order placed successfully!",
+        description: "Thank you for shopping with Lokal",
+      });
+      navigate("/order-confirmation?order_id=" + orderId);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <PaymentElement />
+      <Button
+        type="submit"
+        className="w-full bg-craft-terracotta hover:bg-craft-terracotta/90 mt-4"
+        disabled={isProcessing || !stripe || !elements}
+      >
+        {isProcessing ? (
+          <>Processing...</>
+        ) : (
+          <>
+            <CreditCard className="mr-2" size={16} />
+            Complete Order
+          </>
+        )}
+      </Button>
+    </form>
+  );
+};
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const { items, clearCart, calculateTotal } = useCartStore();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
+  const [orderId, setOrderId] = useState("");
   
   const [formData, setFormData] = useState({
     fullName: "",
@@ -22,10 +97,6 @@ const CheckoutPage = () => {
     city: "",
     state: "",
     zipCode: "",
-    cardNumber: "",
-    cardName: "",
-    expiry: "",
-    cvv: ""
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +107,8 @@ const CheckoutPage = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  // Create payment intent when the form is complete
+  const createPaymentIntent = async () => {
     if (items.length === 0) {
       toast({
         title: "Cart is empty",
@@ -47,21 +117,56 @@ const CheckoutPage = () => {
       });
       return;
     }
-    
-    // Simulate payment processing
-    setIsProcessing(true);
-    setTimeout(() => {
-      setIsProcessing(false);
-      
-      // Clear cart and redirect to order confirmation
-      clearCart();
-      navigate("/order-confirmation");
-      
+
+    if (
+      !formData.fullName || 
+      !formData.email || 
+      !formData.address || 
+      !formData.city || 
+      !formData.state || 
+      !formData.zipCode
+    ) {
       toast({
-        title: "Order placed successfully!",
-        description: "Thank you for shopping with Lokal",
+        title: "Missing information",
+        description: "Please fill out all required fields",
+        variant: "destructive"
       });
-    }, 2000);
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('process-payment', {
+        body: {
+          items,
+          shippingInfo: {
+            name: formData.fullName,
+            email: formData.email,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zipCode: formData.zipCode,
+          },
+        },
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      // Set the client secret and order ID
+      setClientSecret(data.clientSecret);
+      setOrderId(data.orderId);
+    } catch (error) {
+      toast({
+        title: "Error creating payment",
+        description: error.message || "Please try again later",
+        variant: "destructive"
+      });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -84,148 +189,99 @@ const CheckoutPage = () => {
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <h1 className="text-2xl font-bold text-craft-navy mb-6">Checkout</h1>
                 
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-6">
-                    <h2 className="text-lg font-semibold mb-4 text-craft-navy">Contact Information</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="fullName">Full Name</Label>
-                        <Input 
-                          id="fullName" 
-                          name="fullName" 
-                          value={formData.fullName} 
-                          onChange={handleInputChange} 
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input 
-                          id="email" 
-                          name="email" 
-                          type="email" 
-                          value={formData.email} 
-                          onChange={handleInputChange} 
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mb-6">
-                    <h2 className="text-lg font-semibold mb-4 text-craft-navy">Shipping Address</h2>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="address">Address</Label>
-                        <Input 
-                          id="address" 
-                          name="address" 
-                          value={formData.address} 
-                          onChange={handleInputChange} 
-                          required
-                        />
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {!clientSecret ? (
+                  <div>
+                    <div className="mb-6">
+                      <h2 className="text-lg font-semibold mb-4 text-craft-navy">Contact Information</h2>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <Label htmlFor="city">City</Label>
+                          <Label htmlFor="fullName">Full Name</Label>
                           <Input 
-                            id="city" 
-                            name="city" 
-                            value={formData.city} 
+                            id="fullName" 
+                            name="fullName" 
+                            value={formData.fullName} 
                             onChange={handleInputChange} 
                             required
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="state">State</Label>
+                          <Label htmlFor="email">Email</Label>
                           <Input 
-                            id="state" 
-                            name="state" 
-                            value={formData.state} 
-                            onChange={handleInputChange} 
-                            required
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="zipCode">ZIP Code</Label>
-                          <Input 
-                            id="zipCode" 
-                            name="zipCode" 
-                            value={formData.zipCode} 
+                            id="email" 
+                            name="email" 
+                            type="email" 
+                            value={formData.email} 
                             onChange={handleInputChange} 
                             required
                           />
                         </div>
                       </div>
                     </div>
+                    
+                    <div className="mb-6">
+                      <h2 className="text-lg font-semibold mb-4 text-craft-navy">Shipping Address</h2>
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="address">Address</Label>
+                          <Input 
+                            id="address" 
+                            name="address" 
+                            value={formData.address} 
+                            onChange={handleInputChange} 
+                            required
+                          />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="city">City</Label>
+                            <Input 
+                              id="city" 
+                              name="city" 
+                              value={formData.city} 
+                              onChange={handleInputChange} 
+                              required
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="state">State</Label>
+                            <Input 
+                              id="state" 
+                              name="state" 
+                              value={formData.state} 
+                              onChange={handleInputChange} 
+                              required
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="zipCode">ZIP Code</Label>
+                            <Input 
+                              id="zipCode" 
+                              name="zipCode" 
+                              value={formData.zipCode} 
+                              onChange={handleInputChange} 
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <Button 
+                      onClick={createPaymentIntent}
+                      className="w-full bg-craft-terracotta hover:bg-craft-terracotta/90 mt-4"
+                      disabled={isProcessing || items.length === 0}
+                    >
+                      {isProcessing ? "Processing..." : "Proceed to Payment"}
+                    </Button>
                   </div>
-                  
-                  <div className="mb-6">
+                ) : (
+                  <div>
                     <h2 className="text-lg font-semibold mb-4 text-craft-navy">Payment Information</h2>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="cardNumber">Card Number</Label>
-                        <Input 
-                          id="cardNumber" 
-                          name="cardNumber" 
-                          placeholder="1234 5678 9012 3456" 
-                          value={formData.cardNumber} 
-                          onChange={handleInputChange} 
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="cardName">Name on Card</Label>
-                        <Input 
-                          id="cardName" 
-                          name="cardName" 
-                          value={formData.cardName} 
-                          onChange={handleInputChange} 
-                          required
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="expiry">Expiry Date</Label>
-                          <Input 
-                            id="expiry" 
-                            name="expiry" 
-                            placeholder="MM/YY" 
-                            value={formData.expiry} 
-                            onChange={handleInputChange} 
-                            required
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="cvv">CVV</Label>
-                          <Input 
-                            id="cvv" 
-                            name="cvv" 
-                            placeholder="123" 
-                            value={formData.cvv} 
-                            onChange={handleInputChange} 
-                            required
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                      <PaymentForm clientSecret={clientSecret} orderId={orderId} />
+                    </Elements>
                   </div>
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-craft-terracotta hover:bg-craft-terracotta/90 mt-4"
-                    disabled={isProcessing || items.length === 0}
-                  >
-                    {isProcessing ? (
-                      <>Processing...</>
-                    ) : (
-                      <>
-                        <CreditCard className="mr-2" size={16} />
-                        Complete Order
-                      </>
-                    )}
-                  </Button>
-                </form>
+                )}
               </div>
             </div>
             
