@@ -20,6 +20,10 @@ import ArtistResourcesPage from "./pages/ArtistResourcesPage";
 import ArtistSuccessStoriesPage from "./pages/ArtistSuccessStoriesPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import ReturnsExchangesPage from "./pages/ReturnsExchangesPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
+import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +50,10 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/contact-us" element={<ContactUsPage />} />
           <Route path="/returns-policy" element={<ReturnsExchangesPage />} />
+          <Route path="/product/:productId" element={<ProductDetailsPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
