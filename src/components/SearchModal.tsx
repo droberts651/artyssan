@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const navigate = useNavigate();
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Load recent searches from localStorage
   useEffect(() => {
@@ -22,6 +23,15 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
       setRecentSearches(JSON.parse(savedSearches));
     }
   }, []);
+
+  // Focus input when modal opens
+  useEffect(() => {
+    if (isOpen && searchInputRef.current) {
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 100);
+    }
+  }, [isOpen]);
 
   // Trap focus inside modal when open
   useEffect(() => {
@@ -41,14 +51,15 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
 
     // Save search to recent searches
     const newRecentSearches = [
-      searchTerm,
-      ...recentSearches.filter((s) => s !== searchTerm),
+      searchTerm.trim(),
+      ...recentSearches.filter((s) => s !== searchTerm.trim()),
     ].slice(0, 5);
     
     setRecentSearches(newRecentSearches);
     localStorage.setItem("recentSearches", JSON.stringify(newRecentSearches));
     
-    // Navigate to search results page
+    // Clear input and navigate to search results page
+    setSearchTerm("");
     navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
     onClose();
   };
@@ -80,7 +91,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-3 text-gray-400" size={20} />
               <Input
-                autoFocus
+                ref={searchInputRef}
                 type="text"
                 placeholder="Search for handmade items..."
                 className="pl-10 py-6"
