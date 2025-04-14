@@ -41,7 +41,7 @@ const Hero = () => {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
             <div className="bg-white bg-opacity-70 backdrop-blur-sm p-4 rounded-lg">
-              <p className="text-2xl md:text-3xl font-bold text-craft-terracotta">5+</p>
+              <p className="text-2xl md:text-3xl font-bold text-craft-terracotta">50000+</p>
               <p className="text-gray-700">Local Artisans</p>
             </div>
             <div className="bg-white bg-opacity-70 backdrop-blur-sm p-4 rounded-lg">
