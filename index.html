@@ -16,6 +16,21 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <!-- Environment Variables -->
+    <script>
+      // This is a development workaround to set environment variables at runtime
+      // For production, these should be set in your hosting environment
+      if (!import.meta || !import.meta.env.VITE_SUPABASE_URL) {
+        window.VITE_SUPABASE_URL = ''; // Set your Supabase URL here for local development
+      }
+      if (!import.meta || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+        window.VITE_SUPABASE_ANON_KEY = ''; // Set your Supabase anon key here for local development
+      }
+      if (!import.meta || !import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
+        window.VITE_STRIPE_PUBLISHABLE_KEY = ''; // Set your Stripe publishable key here for local development
+      }
+    </script>
   </head>
 
   <body>
