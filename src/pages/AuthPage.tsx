@@ -10,11 +10,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, User, Lock, Mail } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
 
 const AuthPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, signup, isLoading } = useAuthStore();
+  const { login, signup, signInWithGoogle, isLoading } = useAuthStore();
   const [activeTab, setActiveTab] = useState<string>("login");
   
   // Login form state
@@ -46,6 +47,11 @@ const AuthPage = () => {
     } else {
       navigate("/");
     }
+  };
+
+  const handleGoogleSignIn = async () => {
+    await signInWithGoogle();
+    // No navigation here as we'll be redirected by Google OAuth
   };
 
   return (
@@ -80,6 +86,28 @@ const AuthPage = () => {
                     <TabsTrigger value="login">Login</TabsTrigger>
                     <TabsTrigger value="signup">Sign Up</TabsTrigger>
                   </TabsList>
+                  
+                  {/* Google Sign In */}
+                  <div className="mb-6">
+                    <Button 
+                      type="button" 
+                      variant="outline"
+                      className="w-full flex items-center justify-center gap-2 py-5"
+                      onClick={handleGoogleSignIn}
+                      disabled={isLoading}
+                    >
+                      <FcGoogle className="h-5 w-5" />
+                      <span>{isLoading ? "Processing..." : "Sign in with Google"}</span>
+                    </Button>
+                    <div className="relative my-6">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-gray-300"></span>
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                      </div>
+                    </div>
+                  </div>
                   
                   <TabsContent value="login">
                     <form onSubmit={handleLogin} className="space-y-6">

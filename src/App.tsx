@@ -31,7 +31,9 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import AuthPage from "./pages/AuthPage";
+import AuthCallback from "./pages/AuthCallback";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 // Components
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -58,6 +60,7 @@ const App = () => {
             {/* Public routes */}
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/artist/login" element={<ArtistLogin />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
             <Route path="/categories" element={<CategoryPage />} />
@@ -106,6 +109,13 @@ const App = () => {
             <Route path="/artist/forum" element={
               <ProtectedRoute allowedRoles={["artist", "admin"]}>
                 <ArtistForum />
+              </ProtectedRoute>
+            } />
+            
+            {/* Protected admin routes */}
+            <Route path="/admin/dashboard" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminDashboard />
               </ProtectedRoute>
             } />
             

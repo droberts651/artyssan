@@ -1,6 +1,5 @@
-
 import { supabase } from "./supabaseClient";
-import { User, Session } from "@supabase/supabase-js";
+import { User, Session, Provider } from "@supabase/supabase-js";
 import { create } from "zustand";
 import { toast } from "@/components/ui/use-toast";
 
@@ -24,6 +23,7 @@ export type AuthState = {
 
 export type AuthActions = {
   login: (email: string, password: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   signup: (email: string, password: string, role: UserRole, full_name: string) => Promise<void>;
   logout: () => Promise<void>;
   fetchProfile: () => Promise<void>;
@@ -62,6 +62,37 @@ export const useAuthStore = create<AuthState & AuthActions>((set, get) => ({
       set({ error: error.message });
       toast({
         title: "Login failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  signInWithGoogle: async () => {
+    try {
+      set({ isLoading: true, error: null });
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
+      
+      // Note: We don't set user/session here as the redirect will happen
+      // and onAuthStateChange will handle setting the user on return
+      
+      toast({
+        title: "Redirecting to Google",
+        description: "Please complete the authentication process.",
+      });
+    } catch (error: any) {
+      set({ error: error.message });
+      toast({
+        title: "Google login failed",
         description: error.message,
         variant: "destructive",
       });
