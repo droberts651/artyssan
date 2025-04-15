@@ -2,6 +2,63 @@
 import { Instagram, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import ArtistFeedbackSummary from "./ArtistFeedbackSummary";
+import { FeedbackItem } from "./ProductFeedback";
+
+// Mock feedback data by artist
+const mockArtistFeedback: Record<string, FeedbackItem[]> = {
+  "Emma Thompson": [
+    {
+      id: 1,
+      productId: 101,
+      userId: "user1",
+      userName: "Sarah Wilson",
+      rating: 5,
+      comment: "This painting is absolutely stunning in person!",
+      createdAt: "2025-03-15T14:30:00Z",
+    },
+    {
+      id: 2,
+      productId: 101,
+      userId: "user2",
+      userName: "Michael Johnson",
+      rating: 4,
+      comment: "Beautiful artwork that arrived well-packaged.",
+      createdAt: "2025-02-20T09:15:00Z",
+    },
+    {
+      id: 4,
+      productId: 401,
+      userId: "user4",
+      userName: "James Taylor",
+      rating: 5,
+      comment: "The mug is both beautiful and practical. Great craftsmanship!",
+      createdAt: "2025-03-30T10:20:00Z",
+    },
+  ],
+  "David Chen": [
+    {
+      id: 3,
+      productId: 201,
+      userId: "user3",
+      userName: "Lisa Chen",
+      rating: 5,
+      comment: "These earrings are so delicate and beautiful.",
+      createdAt: "2025-04-05T16:45:00Z",
+    },
+  ],
+  "Aisha Johnson": [
+    {
+      id: 5,
+      productId: 301,
+      userId: "user5",
+      userName: "Robert Williams",
+      rating: 4,
+      comment: "Beautiful textural elements and craftsmanship.",
+      createdAt: "2025-03-10T13:15:00Z",
+    },
+  ],
+};
 
 const artists = [
   {
@@ -56,8 +113,15 @@ const FeaturedArtists = () => {
               <div className="p-5">
                 <h3 className="text-xl font-semibold text-craft-navy">{artist.name}</h3>
                 <p className="text-craft-terracotta font-medium">{artist.specialty}</p>
-                <p className="text-gray-600 text-sm mb-4">{artist.location}</p>
-                <div className="flex justify-between items-center">
+                <p className="text-gray-600 text-sm mb-2">{artist.location}</p>
+                
+                {/* Artist Feedback Summary */}
+                <ArtistFeedbackSummary 
+                  artistName={artist.name} 
+                  feedback={mockArtistFeedback[artist.name] || []}
+                />
+                
+                <div className="flex justify-between items-center mt-4">
                   <Button variant="outline" size="sm" className="text-craft-navy border-craft-navy">
                     <Instagram size={16} className="mr-2" /> Follow
                   </Button>

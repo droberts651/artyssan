@@ -1,14 +1,14 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Heart, ShoppingCart, Share2, ArrowLeft } from "lucide-react";
+import { Heart, ShoppingCart, Share2, ArrowLeft, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { toast } from "@/hooks/use-toast";
 import { useCartStore } from "@/store/cartStore";
+import FeedbackForm from "@/components/FeedbackForm";
+import ProductFeedback, { FeedbackItem } from "@/components/ProductFeedback";
 
-// Mock product data - in a real application, this would come from an API
 const productsData = {
   "101": {
     id: 101,
@@ -72,17 +72,53 @@ const productsData = {
   },
 };
 
+const mockFeedbackData: Record<string, FeedbackItem[]> = {
+  "101": [
+    {
+      id: 1,
+      productId: 101,
+      userId: "user1",
+      userName: "Sarah Wilson",
+      rating: 5,
+      comment: "This painting is absolutely stunning in person! The colors are even more vibrant than shown in the photos, and it's the perfect statement piece for my living room.",
+      createdAt: "2025-03-15T14:30:00Z",
+    },
+    {
+      id: 2,
+      productId: 101,
+      userId: "user2",
+      userName: "Michael Johnson",
+      rating: 4,
+      comment: "Beautiful artwork that arrived well-packaged. Slightly smaller than I expected, but still very happy with the purchase.",
+      createdAt: "2025-02-20T09:15:00Z",
+    },
+  ],
+  "201": [
+    {
+      id: 3,
+      productId: 201,
+      userId: "user3",
+      userName: "Lisa Chen",
+      rating: 5,
+      comment: "These earrings are so delicate and beautiful. I receive compliments every time I wear them!",
+      createdAt: "2025-04-05T16:45:00Z",
+    },
+  ],
+};
+
 const ProductDetailsPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [feedbackFormOpen, setFeedbackFormOpen] = useState(false);
   const { addItem } = useCartStore();
   
-  // Find the product by ID or use a fallback if not found
   const product = productId && productsData[productId] 
     ? productsData[productId] 
     : null;
+  
+  const productFeedback = productId ? mockFeedbackData[productId] || [] : [];
   
   if (!product) {
     return (
@@ -134,6 +170,13 @@ const ProductDetailsPage = () => {
     }
   };
 
+  const handleFeedbackSubmitted = () => {
+    toast({
+      title: "Thank you for your feedback!",
+      description: "Your review helps other shoppers make informed decisions.",
+    });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -149,7 +192,6 @@ const ProductDetailsPage = () => {
           </Button>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Product images */}
             <div>
               <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4">
                 <img 
@@ -174,7 +216,6 @@ const ProductDetailsPage = () => {
               </div>
             </div>
             
-            {/* Product details */}
             <div>
               <h1 className="text-3xl font-bold text-craft-navy mb-2">{product.name}</h1>
               <p className="text-gray-600 mb-2">by {product.artist}</p>
@@ -243,12 +284,36 @@ const ProductDetailsPage = () => {
                   <Share2 size={18} />
                   <span className="text-sm">Share</span>
                 </button>
+                <button 
+                  className="flex items-center gap-1 hover:text-craft-navy transition-colors ml-auto"
+                  onClick={() => setFeedbackFormOpen(true)}
+                >
+                  <MessageSquare size={18} />
+                  <span className="text-sm">Leave Feedback</span>
+                </button>
               </div>
             </div>
           </div>
+          
+          {productFeedback.length > 0 && (
+            <div className="mt-16">
+              <ProductFeedback feedback={productFeedback} />
+            </div>
+          )}
         </div>
       </main>
       <Footer />
+      
+      {product && (
+        <FeedbackForm
+          productId={product.id}
+          productName={product.name}
+          artistName={product.artist}
+          open={feedbackFormOpen}
+          onOpenChange={setFeedbackFormOpen}
+          onFeedbackSubmitted={handleFeedbackSubmitted}
+        />
+      )}
     </div>
   );
 };
