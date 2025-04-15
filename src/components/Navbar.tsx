@@ -1,3 +1,4 @@
+
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import SearchModal from "./SearchModal";
 import CartDropdown from "./CartDropdown";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCartStore } from "@/store/cartStore";
+import { useAuthStore } from "@/lib/auth";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,9 +15,17 @@ const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
   const { itemCount } = useCartStore();
+  const { user, profile, logout } = useAuthStore();
 
   const handleUserClick = () => {
-    navigate("/artist/login");
+    if (user) {
+      // Show a dropdown with logout option if logged in
+      // For now, let's just log out
+      logout();
+    } else {
+      // Redirect to auth page with Google sign-in
+      navigate("/auth");
+    }
   };
 
   return (
@@ -56,7 +66,19 @@ const Navbar = () => {
             className="text-craft-navy"
             onClick={handleUserClick}
           >
-            <User size={20} />
+            {user ? (
+              profile?.avatar_url ? (
+                <img 
+                  src={profile.avatar_url} 
+                  alt="User avatar" 
+                  className="w-6 h-6 rounded-full" 
+                />
+              ) : (
+                <User size={20} />
+              )
+            ) : (
+              <User size={20} />
+            )}
           </Button>
           
           <Popover open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -122,7 +144,17 @@ const Navbar = () => {
             <Link to="/artists" className="text-foreground hover:text-craft-terracotta font-medium py-2">Artists</Link>
             <Link to="/new-arrivals" className="text-foreground hover:text-craft-terracotta font-medium py-2">New Arrivals</Link>
             <Link to="/about-us" className="text-foreground hover:text-craft-terracotta font-medium py-2">About Us</Link>
-            <Link to="/artist/login" className="text-foreground hover:text-craft-terracotta font-medium py-2">Account</Link>
+            {user ? (
+              <Button 
+                variant="ghost" 
+                className="justify-start p-0 hover:text-craft-terracotta font-medium"
+                onClick={() => logout()}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Link to="/auth" className="text-foreground hover:text-craft-terracotta font-medium py-2">Login</Link>
+            )}
           </div>
         </div>
       )}

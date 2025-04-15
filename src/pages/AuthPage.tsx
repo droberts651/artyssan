@@ -32,26 +32,19 @@ const AuthPage = () => {
     e.preventDefault();
     await login(loginEmail, loginPassword);
     
-    // Redirect to the appropriate page based on role
-    const from = (location.state as any)?.from?.pathname || "/";
-    navigate(from);
+    // Redirect handled in AuthCallback component
   };
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     await signup(signupEmail, signupPassword, role, fullName);
     
-    // After signup, navigate to the appropriate dashboard
-    if (role === "artist") {
-      navigate("/artist/listings");
-    } else {
-      navigate("/");
-    }
+    // Redirect handled in AuthCallback component
   };
 
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
-    // No navigation here as we'll be redirected by Google OAuth
+    // Redirect handled in AuthCallback component
   };
 
   return (
@@ -66,7 +59,7 @@ const AuthPage = () => {
                 <div className="absolute inset-0 opacity-20 bg-pattern"></div>
                 <div className="relative z-10 h-full flex flex-col justify-between">
                   <div>
-                    <h2 className="text-3xl font-bold text-white mb-3">Welcome to CraftMarket</h2>
+                    <h2 className="text-3xl font-bold text-white mb-3">Welcome to Artlokal</h2>
                     <p className="text-[#D1E8E2] opacity-90">
                       Join our community of artists and craft enthusiasts
                     </p>
@@ -81,33 +74,34 @@ const AuthPage = () => {
 
               {/* Auth form side */}
               <div className="p-8 md:p-12">
+                {/* Google Sign In - Prominently featured at the top */}
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold text-center mb-4">Sign in with Google</h2>
+                  <Button 
+                    type="button" 
+                    variant="outline"
+                    className="w-full flex items-center justify-center gap-2 py-5"
+                    onClick={handleGoogleSignIn}
+                    disabled={isLoading}
+                  >
+                    <FcGoogle className="h-5 w-5" />
+                    <span>{isLoading ? "Processing..." : "Continue with Google"}</span>
+                  </Button>
+                  <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t border-gray-300"></span>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-white text-gray-500">Or continue with email</span>
+                    </div>
+                  </div>
+                </div>
+                
                 <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab}>
                   <TabsList className="grid w-full grid-cols-2 mb-8">
                     <TabsTrigger value="login">Login</TabsTrigger>
                     <TabsTrigger value="signup">Sign Up</TabsTrigger>
                   </TabsList>
-                  
-                  {/* Google Sign In */}
-                  <div className="mb-6">
-                    <Button 
-                      type="button" 
-                      variant="outline"
-                      className="w-full flex items-center justify-center gap-2 py-5"
-                      onClick={handleGoogleSignIn}
-                      disabled={isLoading}
-                    >
-                      <FcGoogle className="h-5 w-5" />
-                      <span>{isLoading ? "Processing..." : "Sign in with Google"}</span>
-                    </Button>
-                    <div className="relative my-6">
-                      <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t border-gray-300"></span>
-                      </div>
-                      <div className="relative flex justify-center text-sm">
-                        <span className="px-2 bg-white text-gray-500">Or continue with</span>
-                      </div>
-                    </div>
-                  </div>
                   
                   <TabsContent value="login">
                     <form onSubmit={handleLogin} className="space-y-6">

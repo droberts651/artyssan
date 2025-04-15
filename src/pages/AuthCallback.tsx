@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuthStore } from "@/lib/auth";
+import { toast } from "@/components/ui/use-toast";
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -11,42 +12,78 @@ const AuthCallback = () => {
   useEffect(() => {
     // Handle the OAuth callback
     const handleAuthCallback = async () => {
-      // Get the session - Supabase will automatically exchange the code for a session
-      const { data: { session }, error } = await supabase.auth.getSession();
-      
-      if (error) {
-        console.error("Error with auth callback:", error);
-        navigate("/auth");
-        return;
-      }
-      
-      if (session) {
-        // Fetch the user profile
-        await fetchProfile();
+      try {
+        // Get the session - Supabase will automatically exchange the code for a session
+        const { data: { session }, error } = await supabase.auth.getSession();
         
-        // Redirect based on profile
-        if (session.user) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', session.user.id)
-            .single();
-            
-          if (profile) {
-            if (profile.role === 'admin') {
-              navigate("/admin/dashboard");
-            } else if (profile.role === 'artist') {
-              navigate("/artist/listings");
+        if (error) {
+          console.error("Error with auth callback:", error);
+          toast({
+            title: "Authentication Error",
+            description: error.message,
+            variant: "destructive"
+          });
+          navigate("/auth");
+          return;
+        }
+        
+        if (session) {
+          // Fetch the user profile
+          await fetchProfile();
+          
+          // Redirect based on profile role
+          if (session.user) {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('role')
+              .eq('id', session.user.id)
+              .single();
+              
+            if (profile) {
+              toast({
+                title: "Login Successful",
+                description: `Welcome back!`,
+              });
+              
+              // Redirect based on user role
+              switch(profile.role) {
+                case 'admin':
+                  navigate("/admin/dashboard");
+                  break;
+                case 'artist':
+                  navigate("/artist/listings");
+                  break;
+                case 'customer':
+                  navigate("/");
+                  break;
+                default:
+                  navigate("/");
+              }
             } else {
+              toast({
+                title: "Login Successful",
+                description: "Welcome to Artlokal!",
+              });
               navigate("/");
             }
           } else {
             navigate("/");
           }
         } else {
-          navigate("/");
+          toast({
+            title: "Authentication Error",
+            description: "No session found",
+            variant: "destructive"
+          });
+          navigate("/auth");
         }
-      } else {
+      } catch (error) {
+        console.error("Error in auth callback:", error);
+        toast({
+          title: "Authentication Error",
+          description: "An unexpected error occurred",
+          variant: "destructive"
+        });
         navigate("/auth");
       }
     };
