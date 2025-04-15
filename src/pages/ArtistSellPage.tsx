@@ -9,7 +9,7 @@ const ArtistSellPage = () => {
       <div className="min-h-screen bg-craft-background py-12">
         <div className="container-custom">
           <div className="bg-white rounded-lg shadow-sm p-8 md:p-12">
-            <h1 className="text-3xl font-bold text-craft-navy mb-6">Sell on Lokal</h1>
+            <h1 className="text-3xl font-bold text-craft-navy mb-6">Sell on Artlokal</h1>
             
             <div className="space-y-8">
               <section>

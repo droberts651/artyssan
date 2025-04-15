@@ -1,3 +1,4 @@
+
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,7 @@ const Hero = () => {
 
       <div className="container-custom relative z-10">
         <div className="max-w-3xl mx-auto text-center animate-fade-in">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-craft-navy mb-6">Discover Unique Local Crafts</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-craft-navy mb-6">Discover Unique Local Artworks</h1>
           <p className="text-lg md:text-xl text-gray-700 mb-8">
             Supporting local artists and artisans in your community.
             Find handcrafted treasures made with passion and skill.

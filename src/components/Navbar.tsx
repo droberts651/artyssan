@@ -1,4 +1,3 @@
-
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -26,9 +25,9 @@ const Navbar = () => {
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
             <div className="w-10 h-10 bg-craft-terracotta rounded-full flex items-center justify-center mr-2">
-              <span className="text-white font-bold text-xl">L</span>
+              <span className="text-white font-bold text-xl">A</span>
             </div>
-            <h1 className="text-craft-navy text-xl md:text-2xl font-bold hidden sm:block">Lokal</h1>
+            <h1 className="text-craft-navy text-xl md:text-2xl font-bold hidden sm:block">Artlokal</h1>
           </Link>
         </div>
 
