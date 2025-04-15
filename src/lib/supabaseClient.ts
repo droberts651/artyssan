@@ -1,41 +1,15 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize the Supabase client with proper error handling
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Use the values directly from our Supabase config
+const supabaseUrl = "https://phdixypytjgwcelamfdp.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoZGl4eXB5dGpnd2NlbGFtZmRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMDUyNjgsImV4cCI6MjA1OTc4MTI2OH0.fx5eWF41Vg6j3zXE99rX7HQdBuPbaV67uKXbuynoJws";
 
-// Check if the environment variables are set
-if (!supabaseUrl) {
-  console.error('Missing environment variable: VITE_SUPABASE_URL');
-}
-
-if (!supabaseAnonKey) {
-  console.error('Missing environment variable: VITE_SUPABASE_ANON_KEY');
-}
-
-// Create a dummy client for development if variables are missing
-// This prevents the app from crashing during development
-export const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : {
-      // Provide a mock implementation that logs instead of crashing
-      functions: {
-        invoke: async (name: string, options?: any) => {
-          console.error(`Cannot invoke function "${name}": Supabase not initialized. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.`);
-          return { data: null, error: new Error('Supabase not initialized') };
-        }
-      },
-      auth: {
-        signIn: async () => {
-          console.error('Supabase auth not initialized. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.');
-          return { data: null, error: new Error('Supabase not initialized') };
-        },
-        signOut: async () => {
-          console.error('Supabase auth not initialized. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.');
-          return { error: new Error('Supabase not initialized') };
-        }
-      }
-    } as any; // Type assertion to any to avoid TypeScript errors
-
-// Add a message to the Vite-env.d.ts file to document the needed environment variables
+// Create and export the Supabase client
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    storage: localStorage,
+    persistSession: true,
+    autoRefreshToken: true,
+  }
+});

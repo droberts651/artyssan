@@ -1,55 +1,51 @@
 
-import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuthStore } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { User, Lock, ArrowRight, Mail } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useAuthStore } from "@/lib/auth";
+import { ArrowRight, User, Lock, Mail } from "lucide-react";
 
-const ArtistLogin = () => {
+const AuthPage = () => {
   const navigate = useNavigate();
-  const { login, signup, isLoading, user, profile } = useAuthStore();
+  const location = useLocation();
+  const { login, signup, isLoading } = useAuthStore();
   const [activeTab, setActiveTab] = useState<string>("login");
   
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
   
   // Signup form state
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState<"artist" | "customer">("artist");
-
-  // Redirect if already logged in
-  useEffect(() => {
-    if (user && profile) {
-      if (profile.role === "artist") {
-        navigate("/artist/listings");
-      } else if (profile.role === "admin") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/");
-      }
-    }
-  }, [user, profile, navigate]);
+  const [role, setRole] = useState<"artist" | "customer">("customer");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     await login(loginEmail, loginPassword);
+    
+    // Redirect to the appropriate page based on role
+    const from = (location.state as any)?.from?.pathname || "/";
+    navigate(from);
   };
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    // We default to artist role on this page
     await signup(signupEmail, signupPassword, role, fullName);
+    
+    // After signup, navigate to the appropriate dashboard
+    if (role === "artist") {
+      navigate("/artist/listings");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -64,9 +60,9 @@ const ArtistLogin = () => {
                 <div className="absolute inset-0 opacity-20 bg-pattern"></div>
                 <div className="relative z-10 h-full flex flex-col justify-between">
                   <div>
-                    <h2 className="text-3xl font-bold text-white mb-3">Artist Portal</h2>
+                    <h2 className="text-3xl font-bold text-white mb-3">Welcome to CraftMarket</h2>
                     <p className="text-[#D1E8E2] opacity-90">
-                      Log in to manage your handcrafted items and track your sales
+                      Join our community of artists and craft enthusiasts
                     </p>
                   </div>
                   <div>
@@ -77,7 +73,7 @@ const ArtistLogin = () => {
                 </div>
               </div>
 
-              {/* Login form side */}
+              {/* Auth form side */}
               <div className="p-8 md:p-12">
                 <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab}>
                   <TabsList className="grid w-full grid-cols-2 mb-8">
@@ -126,22 +122,6 @@ const ArtistLogin = () => {
                             required
                           />
                         </div>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="remember"
-                          checked={rememberMe}
-                          onCheckedChange={(checked) => {
-                            setRememberMe(checked as boolean);
-                          }}
-                        />
-                        <label
-                          htmlFor="remember"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Remember me
-                        </label>
                       </div>
 
                       <Button 
@@ -212,12 +192,30 @@ const ArtistLogin = () => {
                         </div>
                       </div>
 
+                      <div className="space-y-2">
+                        <Label>Account Type</Label>
+                        <RadioGroup value={role} onValueChange={(value) => setRole(value as "artist" | "customer")}>
+                          <div className="flex items-center space-x-2 mb-2">
+                            <RadioGroupItem value="customer" id="customer" />
+                            <Label htmlFor="customer" className="cursor-pointer">
+                              Customer - I want to purchase crafts
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="artist" id="artist" />
+                            <Label htmlFor="artist" className="cursor-pointer">
+                              Artist - I want to sell my crafts
+                            </Label>
+                          </div>
+                        </RadioGroup>
+                      </div>
+
                       <Button 
                         type="submit" 
                         className="w-full bg-[#19747E] hover:bg-[#19747E]/90"
                         disabled={isLoading}
                       >
-                        {isLoading ? "Creating Account..." : "Create Artist Account"}
+                        {isLoading ? "Creating Account..." : "Create Account"}
                         {!isLoading && <ArrowRight className="ml-2" size={16} />}
                       </Button>
                     </form>
@@ -233,4 +231,4 @@ const ArtistLogin = () => {
   );
 };
 
-export default ArtistLogin;
+export default AuthPage;
