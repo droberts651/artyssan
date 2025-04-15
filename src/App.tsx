@@ -42,10 +42,10 @@ import { initAuth } from "./lib/auth";
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Initialize authentication
+  // Initialize authentication - Fixed to properly handle the cleanup function
   useEffect(() => {
     const cleanup = initAuth();
-    return () => cleanup();
+    return cleanup;
   }, []);
 
   return (

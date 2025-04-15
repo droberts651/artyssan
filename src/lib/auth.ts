@@ -1,9 +1,8 @@
 
-import { supabase } from "@/integrations/supabase/client";
-import { Database } from "@/integrations/supabase/types";
+import { supabase } from "./supabaseClient";
 import { User, Session } from "@supabase/supabase-js";
 import { create } from "zustand";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/components/ui/use-toast";
 
 type UserRole = "admin" | "artist" | "customer";
 
@@ -191,7 +190,8 @@ export const useAuthStore = create<AuthState & AuthActions>((set, get) => ({
 }));
 
 // Initialize auth state by subscribing to auth changes
-export const initAuth = async () => {
+// Fix: Make sure initAuth returns the cleanup function directly, not a Promise
+export const initAuth = () => {
   const { data: { subscription } } = supabase.auth.onAuthStateChange(
     (event, session) => {
       useAuthStore.setState({ user: session?.user || null, session });
@@ -205,19 +205,21 @@ export const initAuth = async () => {
     }
   );
 
-  // Check for existing session
-  const { data: { session } } = await supabase.auth.getSession();
-  useAuthStore.setState({ 
-    user: session?.user || null, 
-    session,
-    isLoading: false 
+  // Check for existing session (async operation)
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    useAuthStore.setState({ 
+      user: session?.user || null, 
+      session,
+      isLoading: false 
+    });
+    
+    // Fetch profile if user exists
+    if (session?.user) {
+      useAuthStore.getState().fetchProfile();
+    }
   });
-  
-  // Fetch profile if user exists
-  if (session?.user) {
-    await useAuthStore.getState().fetchProfile();
-  }
 
+  // Return the cleanup function directly
   return () => {
     subscription.unsubscribe();
   };
