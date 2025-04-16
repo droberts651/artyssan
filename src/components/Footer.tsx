@@ -12,7 +12,7 @@ const Footer = () => {
               <div className="w-10 h-10 bg-craft-terracotta rounded-full flex items-center justify-center mr-2">
                 <span className="text-white font-bold text-xl">A</span>
               </div>
-              <h3 className="text-craft-navy text-xl font-bold">Artlokal</h3>
+              <h3 className="text-craft-navy text-xl font-bold">Artyssn</h3>
             </div>
             <p className="text-gray-600 mb-4">
               Connecting local artisans with people who appreciate handcrafted quality and unique items.
@@ -67,7 +67,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-200 mt-12 pt-8 text-center text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} Artlokal Finds Hub. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Artyssn Finds Hub. All rights reserved.</p>
         </div>
       </div>
     </footer>

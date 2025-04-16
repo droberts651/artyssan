@@ -9,6 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      artist_accounts: {
+        Row: {
+          created_at: string
+          id: string
+          payout_enabled: boolean | null
+          store_name: string
+          stripe_connect_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          payout_enabled?: boolean | null
+          store_name: string
+          stripe_connect_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          payout_enabled?: boolean | null
+          store_name?: string
+          stripe_connect_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       forum_posts: {
         Row: {
           author_id: string | null
@@ -110,6 +140,44 @@ export type Database = {
           },
         ]
       }
+      order_items: {
+        Row: {
+          artist_id: string | null
+          created_at: string
+          id: string
+          item_price: number
+          order_id: string
+          product_id: number
+          quantity: number
+        }
+        Insert: {
+          artist_id?: string | null
+          created_at?: string
+          id?: string
+          item_price: number
+          order_id: string
+          product_id: number
+          quantity: number
+        }
+        Update: {
+          artist_id?: string | null
+          created_at?: string
+          id?: string
+          item_price?: number
+          order_id?: string
+          product_id?: number
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_artist_id_fkey"
+            columns: ["artist_id"]
+            isOneToOne: false
+            referencedRelation: "artist_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -194,6 +262,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      transactions: {
+        Row: {
+          amount_total: number
+          artist_payout: number
+          created_at: string
+          customer_id: string | null
+          id: string
+          order_id: string
+          platform_fee: number
+          status: string
+          stripe_payment_intent_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_total: number
+          artist_payout: number
+          created_at?: string
+          customer_id?: string | null
+          id?: string
+          order_id: string
+          platform_fee: number
+          status: string
+          stripe_payment_intent_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_total?: number
+          artist_payout?: number
+          created_at?: string
+          customer_id?: string | null
+          id?: string
+          order_id?: string
+          platform_fee?: number
+          status?: string
+          stripe_payment_intent_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {
