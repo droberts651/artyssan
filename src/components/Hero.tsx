@@ -1,4 +1,3 @@
-
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -22,11 +21,8 @@ const Hero = () => {
 
       <div className="container-custom relative z-10">
         <div className="max-w-3xl mx-auto text-center animate-fade-in">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-craft-navy mb-6">Discover Unique Local Artworks</h1>
-          <p className="text-lg md:text-xl text-gray-700 mb-8">
-            Supporting local artists and artisans in your community.
-            Find handcrafted treasures made with passion and skill.
-          </p>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-craft-navy mb-6">Discover </h1>
+          <p className="text-lg md:text-xl text-gray-700 mb-8">Support local artists and artisans in the New England community. Find handcrafted items made with passion and skill.</p>
 
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-center max-w-2xl mx-auto mb-10 gap-3">
